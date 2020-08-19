@@ -45,6 +45,7 @@ const getPlaceByUserId = (req, res, next) => {
 
 const createPlace = (req, res, next) => {
   const { title, description, coordinates, address, creator } = req.body;
+
   const createdPlace = {
     id: uuid.v4(),
     title,
@@ -58,7 +59,40 @@ const createPlace = (req, res, next) => {
   res.status(201).json({ place: createdPlace });
 };
 
+const updatePlaceById = (req, res, next) => {
+  const placeId = req.params.pid;
+  const updatedPlace = { ...DUMMY_PLACES.find((p) => p.id === placeId) };
+  const placeIndex = DUMMY_PLACES.findIndex((p) => p.id === placeId);
+  
+  const { title, description } = req.body;
+  updatedPlace.title = title;
+  updatedPlace.description = description;
+
+  DUMMY_PLACES[placeIndex] = updatedPlace;
+
+  res.status(200).json({ updatedPlace });
+};
+
+const deletePlaceById = (req, res, next) => {
+  const placeId = req.params.pid;
+  const place = DUMMY_PLACES.find((p) => p.id === placeId);
+  if (!place) {
+    return next(
+      new HttpError("Could not find a place with the provided user id", 404)
+    );
+  }
+  const { title, description, coordinates, address } = req.body;
+  place.title = title;
+  place.description = description;
+  place.location = coordinates;
+  place.address = address;
+
+  res.status(201).json({ place });
+};
+
 exports.getPlaces = getPlaces;
 exports.getPlaceById = getPlaceById;
 exports.getPlaceByUserId = getPlaceByUserId;
 exports.createPlace = createPlace;
+exports.updatePlaceById = updatePlaceById;
+exports.deletePlaceById = deletePlaceById;
