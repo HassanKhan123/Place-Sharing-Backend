@@ -7,20 +7,22 @@ const User = require("../models/user");
 const getUsers = async (req, res, next) => {
   let users;
   try {
-    users = await User.find({},'-password')
+    users = await User.find({}, "-password");
   } catch (error) {
     return next(new HttpError("Fetching users failed, please try again", 500));
   }
-  res.json({ users:users.map(user => user.toObject({getters:true})) });
+  res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
-    return next(new HttpError("Invalid inputs passed, please check your data", 422));
+    return next(
+      new HttpError("Invalid inputs passed, please check your data", 422)
+    );
   }
-  const { name, email, password,places } = req.body;
+  const { name, email, password } = req.body;
 
   let existingUser;
   try {
@@ -41,7 +43,7 @@ const signup = async (req, res, next) => {
     password,
     image:
       "https://images.pexels.com/photos/4473796/pexels-photo-4473796.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    places,
+    places: [],
   });
 
   try {
