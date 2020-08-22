@@ -7,46 +7,6 @@ const getCoordsForAddress = require("../util/location");
 const Place = require("../models/place");
 const User = require("../models/user");
 
-let DUMMY_PLACES = [
-  {
-    id: "p1",
-    title: "Empire State Building",
-    description: "Most popular builiding",
-    location: {
-      lat: 1222,
-      long: -02020,
-    },
-    address: "ABC Address",
-    creator: "u1",
-  },
-  {
-    id: "p1",
-    title: "Empire State Building",
-    description: "Most popular builiding",
-    location: {
-      lat: 1222,
-      long: -02020,
-    },
-    address: "ABC Address",
-    creator: "u1",
-  },
-  {
-    id: "p1",
-    title: "Empire State Building",
-    description: "Most popular builiding",
-    location: {
-      lat: 1222,
-      long: -02020,
-    },
-    address: "ABC Address",
-    creator: "u2",
-  },
-];
-
-const getPlaces = (req, res, next) => {
-  res.json({ places: DUMMY_PLACES });
-};
-
 const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid;
   let place;
@@ -128,8 +88,6 @@ const createPlace = async (req, res, next) => {
     user.places.push(createdPlace);
     await user.save({ session: sess });
     await sess.commitTransaction();
-
-    // await createdPlace.save();
   } catch (error) {
     return next(new HttpError("Creating place failed, please try again", 500));
   }
