@@ -3,7 +3,6 @@ const { check } = require("express-validator");
 
 const {
   getPlaceById,
-  getPlaces,
   getPlacesByUserId,
   createPlace,
   updatePlaceById,
@@ -11,8 +10,6 @@ const {
 } = require("../controllers/places-controller");
 
 const router = express.Router();
-
-router.get("/", getPlaces);
 
 router.get("/:pid", getPlaceById);
 

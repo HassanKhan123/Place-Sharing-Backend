@@ -164,7 +164,6 @@ const deletePlaceById = async (req, res, next) => {
   res.status(200).json({ message: "Place deleted successfully" });
 };
 
-exports.getPlaces = getPlaces;
 exports.getPlaceById = getPlaceById;
 exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;

@@ -9,6 +9,16 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
+  next();
+});
+
 app.use("/api/places/", placesRoutes);
 app.use("/api/users/", userRoutes);
 
@@ -29,7 +39,7 @@ app.use((err, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://Hassan123:Hassan123@cluster0.qigep.mongodb.net/places?retryWrites=true&w=majority",
+    "mongodb+srv://Hassan123:Hassan123@cluster0.qigep.mongodb.net/mern?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
