@@ -8,6 +8,7 @@ const {
   updatePlaceById,
   deletePlaceById,
 } = require("../controllers/places-controller");
+const fileUpload = require("../middlewares/file-upload");
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.get("/user/:uid", getPlacesByUserId);
 
 router.post(
   "/",
+  fileUpload.single("image"),
   [
     check("title").not().isEmpty(),
     check("description").isLength({ min: 5 }),

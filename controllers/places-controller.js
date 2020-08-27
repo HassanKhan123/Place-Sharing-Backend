@@ -67,8 +67,7 @@ const createPlace = async (req, res, next) => {
     location: coordinates,
     address,
     creator,
-    image:
-      "https://images.pexels.com/photos/2884866/pexels-photo-2884866.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    image:req.file.path,
   });
 
   let user;
