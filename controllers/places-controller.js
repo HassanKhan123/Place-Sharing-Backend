@@ -1,3 +1,4 @@
+const fs = require("fs");
 const uuid = require("uuid");
 const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
@@ -67,7 +68,7 @@ const createPlace = async (req, res, next) => {
     location: coordinates,
     address,
     creator,
-    image:req.file.path,
+    image: req.file.path,
   });
 
   let user;
@@ -146,7 +147,7 @@ const deletePlaceById = async (req, res, next) => {
       new HttpError("Could not delete a place with the provided place id", 404)
     );
   }
-
+  const imagePath = place.image;
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -160,6 +161,9 @@ const deletePlaceById = async (req, res, next) => {
     );
   }
 
+  fs.unlink(imagePath, (err) => {
+    console.log(err);
+  });
   res.status(200).json({ message: "Place deleted successfully" });
 };
 
