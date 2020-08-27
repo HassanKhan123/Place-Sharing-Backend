@@ -41,8 +41,7 @@ const signup = async (req, res, next) => {
     name,
     email,
     password,
-    image:
-      "https://images.pexels.com/photos/4473796/pexels-photo-4473796.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    image:req.file.path,
     places: [],
   });
 
