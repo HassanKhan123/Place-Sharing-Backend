@@ -9,12 +9,15 @@ const {
   deletePlaceById,
 } = require("../controllers/places-controller");
 const fileUpload = require("../middlewares/file-upload");
+const checkAuth = require('../middlewares/check-auth')
 
 const router = express.Router();
 
 router.get("/:pid", getPlaceById);
 
 router.get("/user/:uid", getPlacesByUserId);
+
+router.use(checkAuth)
 
 router.post(
   "/",
