@@ -69,7 +69,22 @@ const login = async (req, res, next) => {
     return next(new HttpError("Login failed, please try again", 500));
   }
 
-  if (!existingUser || existingUser.password !== password) {
+  if (!existingUser) {
+    return next(
+      new HttpError("Invalid credentials, could not log you in.", 401)
+    );
+  }
+
+  let isValidPassword=false;
+  try {
+    isValidPassword = bcrypt.compare(password,existingUser.password)
+  } catch (error) {
+    return next(
+      new HttpError("Invalid credentials, could not log you in.", 500)
+    );
+  }
+
+  if(!isValidPassword){
     return next(
       new HttpError("Invalid credentials, could not log you in.", 401)
     );
