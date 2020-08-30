@@ -1,5 +1,5 @@
 const fs = require("fs");
-const path = require('path')
+const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -11,7 +11,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/uploads/images',express.static(path.join('uploads','images')))
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -48,7 +48,7 @@ app.use((err, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://Hassan123:Hassan123@cluster0.qigep.mongodb.net/mern?retryWrites=true&w=majority",
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qigep.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
